@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VO PHOTOGRAPHY | Editorial & Fashion</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Config Setup -->
+    <script>
+        function configureTailwind() {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            serif: ['"Cormorant Garamond"', 'serif'],
+                            sans: ['"Montserrat"', 'sans-serif'],
+                        },
+                        colors: {
+                            'vo-black': '#080808',
+                            'vo-dark': '#0f0f0f',
+                            'vo-gold': '#C5A059', /* More muted, metallic gold */
+                            'vo-white': '#EAEAEA',
+                        },
+                        backgroundImage: {
+                            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        },
+                        spacing: {
+                            '128': '32rem',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com" onload="configureTailwind()"></script>
+
+    <style>
+        /* FILM GRAIN TEXTURE - The secret to "editorial" feel */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        body {
+            background-color: #080808;
+            color: #EAEAEA;
+            overflow-x: hidden;
+            cursor: default;
+            /* Keep default cursor for elegance */
+        }
+
+        /* TEXT REVEAL ANIMATION */
+        .reveal-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal-text.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* IMAGE HOVER STATES */
+        .editorial-image-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .editorial-image-container img {
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 0.5s ease;
+            filter: grayscale(100%) contrast(110%);
+        }
+
+        .editorial-image-container:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%) contrast(100%);
+        }
+
+        /* CUSTOM SCROLLBAR - Minimalist */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #080808;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 2px;
+        }
+
+        /* LOADER */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #080808;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        /* NAVIGATION LINE ANIMATION */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: #C5A059;
+            transition: all 0.4s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        /* STAGGERED GRID LAYOUT HELPERS */
+        .stagger-col-1 {
+            margin-top: 0;
+        }
+
+        .stagger-col-2 {
+            margin-top: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .stagger-col-2 {
+                margin-top: 8rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-vo-gold selection:text-black">
+
+    <!-- Noise Texture Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="text-center">
+            <h1 class="font-serif text-5xl md:text-7xl italic text-vo-white tracking-widest animate-pulse opacity-80">VO
+            </h1>
+            <p class="font-sans text-[10px] tracking-[0.4em] uppercase text-vo-gold mt-4">Photography</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar"
+        class="fixed w-full z-50 transition-all duration-700 py-8 px-6 md:px-12 bg-transparent mix-blend-exclusion text-white">
+        <div class="flex justify-between items-center max-w-[1800px] mx-auto">
+            <a href="#" class="font-serif text-2xl md:text-3xl font-medium tracking-widest z-50 relative group">
+                VO<span class="text-vo-gold opacity-0 group-hover:opacity-100 transition-opacity">.</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-16 font-sans text-[10px] tracking-[0.25em] uppercase font-light">
+                <a href="#portfolio" class="nav-link text-vo-white/70 hover:text-white transition-colors">Portfolio</a>
+                <a href="#muse" class="nav-link text-vo-white/70 hover:text-white transition-colors">The Muse</a>
+                <a href="#services" class="nav-link text-vo-white/70 hover:text-white transition-colors">Services</a>
+                <a href="#contact" class="nav-link text-vo-white/70 hover:text-white transition-colors">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden z-50 relative group">
+                <div class="space-y-2">
+                    <span
+                        class="block w-8 h-[1px] bg-white transition-transform group-hover:-translate-x-2 duration-300"></span>
+                    <span
+                        class="block w-6 h-[1px] bg-white ml-auto transition-transform group-hover:translate-x-1 duration-300"></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-vo-black z-40 transform translate-x-full transition-transform duration-700 cubic-bezier(0.77, 0, 0.175, 1) flex flex-col justify-center items-center">
+        <div class="flex flex-col space-y-10 font-serif text-5xl italic text-center text-vo-white">
+            <a href="#portfolio"
+                class="mobile-link opacity-0 translate-y-4 transition-all duration-500 delay-100">Portfolio</a>
+            <a href="#muse" class="mobile-link opacity-0 translate-y-4 transition-all duration-500 delay-200">The
+                Muse</a>
+            <a href="#services"
+                class="mobile-link opacity-0 translate-y-4 transition-all duration-500 delay-300">Services</a>
+            <a href="#contact"
+                class="mobile-link opacity-0 translate-y-4 transition-all duration-500 delay-400">Contact</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2864&auto=format&fit=crop"
+                alt="Editorial Fashion Model"
+                class="w-full h-full object-cover opacity-50 grayscale contrast-125 scale-105 animate-subtle-zoom">
+            <div class="absolute inset-0 bg-gradient-to-b from-vo-black/30 via-transparent to-vo-black"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 w-full max-w-6xl mx-auto">
+            <div class="flex flex-col items-center">
+                <!-- Top Detail -->
+                <div class="mb-8 overflow-hidden">
+                    <div class="flex items-center space-x-4 reveal-text" style="transition-delay: 200ms;">
+                        <span class="h-[1px] w-12 bg-vo-gold"></span>
+                        <p class="font-sans text-[9px] md:text-[11px] tracking-[0.4em] uppercase text-vo-white">
+                            Editorial & Fashion</p>
+                        <span class="h-[1px] w-12 bg-vo-gold"></span>
+                    </div>
+                </div>
+
+                <!-- Main Title -->
+                <h1
+                    class="font-serif text-7xl md:text-9xl lg:text-[11rem] text-vo-white leading-[0.85] tracking-tight mix-blend-lighten mb-10">
+                    <div class="overflow-hidden"><span class="block reveal-text" style="transition-delay: 400ms;">The
+                            Inner</span></div>
+                    <div class="overflow-hidden"><span class="block italic text-vo-gold/90 reveal-text"
+                            style="transition-delay: 600ms;">Muse</span></div>
+                </h1>
+
+                <!-- Subtitle -->
+                <div class="overflow-hidden max-w-md mx-auto">
+                    <p class="font-sans text-[10px] tracking-[0.25em] text-gray-400 leading-7 text-center reveal-text"
+                        style="transition-delay: 800ms;">
+                        ANCHORAGE, ALASKA. <br>
+                        CAPTURING THE ILLIMITABLE SPIRIT THROUGH HIGH-FASHION SENSIBILITIES.
+                    </p>
+                </div>
+
+                <!-- CTA -->
+                <div class="mt-16 overflow-hidden reveal-text" style="transition-delay: 1000ms;">
+                    <a href="#portfolio"
+                        class="group relative inline-flex items-center justify-center px-10 py-4 overflow-hidden font-sans text-[10px] tracking-[0.3em] font-medium text-white border border-white/20 transition-all duration-300 hover:border-vo-gold">
+                        <span
+                            class="absolute w-0 h-0 transition-all duration-500 ease-out bg-vo-gold rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
+                        <span class="relative group-hover:text-vo-gold transition-colors">EXPLORE WORK</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom left vertical text -->
+        <div class="absolute bottom-12 left-12 hidden md:block">
+            <p class="font-sans text-[9px] tracking-[0.3em] text-vo-white/50 -rotate-90 origin-bottom-left">EST. 2012
+            </p>
+        </div>
+    </header>
+
+    <!-- The Muse / Philosophy Section -->
+    <section id="muse" class="py-32 md:py-48 px-6 bg-vo-black relative z-10">
+        <div class="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 items-center">
+
+            <!-- Text Content (Col 1-5) -->
+            <div class="md:col-span-5 relative z-20 reveal-section">
+                <span class="font-serif text-6xl text-vo-gold/20 absolute -top-12 -left-8 -z-10 font-italic">01</span>
+                <h2 class="font-serif text-5xl md:text-7xl text-vo-white mb-10 leading-none">
+                    Illuminating <br>
+                    <span class="italic font-light text-vo-gold">The Illimitable</span>
+                </h2>
+
+                <div
+                    class="space-y-8 font-serif text-xl md:text-2xl text-gray-400 font-light leading-relaxed text-justify">
+                    <p>
+                        VO Photography is defined by a sophisticated, editorial aesthetic that brings high-fashion
+                        sensibilities to personal portraiture. Unlike standard lifestyle photography, we exude a quality
+                        that is bold, artistic, and empowering.
+                    </p>
+                    <p>
+                        We refer to our subjects as <span class="text-white italic">"muses."</span> The brand philosophy
+                        centers on seeing the inner strength and elegance in every individual. Whether in studio or
+                        amidst the rugged beauty of Alaska, we create legacy portraits designed to be printed as art.
+                    </p>
+                </div>
+
+                <div class="mt-12 w-24 h-[1px] bg-vo-gold/50"></div>
+            </div>
+
+            <!-- Image Composition (Col 7-12) -->
+            <div class="md:col-span-7 relative">
+                <!-- Main Image -->
+                <div class="editorial-image-container w-full aspect-[4/5] md:w-[90%] md:ml-auto">
+                    <img src="https://images.unsplash.com/photo-1485230405346-71acb9518d9c?q=80&w=2994&auto=format&fit=crop"
+                        alt="Thuy Vo Profile" class="w-full h-full object-cover">
+                </div>
+                <!-- Overlapping Accent Image -->
+                <div
+                    class="hidden md:block absolute -bottom-16 left-0 w-64 aspect-[3/4] editorial-image-container border-4 border-vo-black z-30">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=2000&auto=format&fit=crop"
+                        alt="Detail Shot" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section (Asymmetric Gallery) -->
+    <section id="portfolio" class="py-32 bg-vo-dark relative">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent to-vo-gold/30">
+        </div>
+
+        <div
+            class="px-6 md:px-12 max-w-[1800px] mx-auto mb-24 flex flex-col md:flex-row justify-between items-end border-b border-white/5 pb-8">
+            <div>
+                <span class="font-sans text-[10px] tracking-[0.3em] text-vo-gold uppercase block mb-4">Selected
+                    Works</span>
+                <h2 class="font-serif text-5xl md:text-7xl text-vo-white font-light">Visual Anthology</h2>
+            </div>
+            <div class="mt-8 md:mt-0">
+                <a href="#"
+                    class="font-sans text-[9px] tracking-[0.25em] text-white/60 hover:text-vo-gold transition-colors uppercase border-b border-white/20 hover:border-vo-gold pb-1">View
+                    Full Archive</a>
+            </div>
+        </div>
+
+        <!-- Asymmetric Grid -->
+        <div class="max-w-[1800px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-32">
+
+            <!-- Column 1 -->
+            <div class="flex flex-col space-y-24 md:space-y-48 pt-0 md:pt-12">
+                <!-- Item 1: Large Vertical -->
+                <div class="group cursor-pointer reveal-section">
+                    <div class="editorial-image-container aspect-[3/4] w-full">
+                        <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?q=80&w=2940&auto=format&fit=crop"
+                            class="w-full h-full object-cover" alt="Fashion">
+                    </div>
+                    <div class="mt-6 flex justify-between items-start">
+                        <div>
+                            <p class="font-sans text-[9px] tracking-[0.2em] text-vo-gold uppercase mb-2">Editorial</p>
+                            <h3
+                                class="font-serif text-3xl text-vo-white italic group-hover:text-vo-gold transition-colors">
+                                The Avant Garde</h3>
+                        </div>
+                        <span class="font-sans text-[9px] text-white/30">01</span>
+                    </div>
+                </div>
+
+                <!-- Item 3: Square-ish -->
+                <div class="group cursor-pointer reveal-section md:w-[80%] md:ml-auto">
+                    <div class="editorial-image-container aspect-[4/5] w-full">
+                        <img src="https://images.unsplash.com/photo-1610303073063-e38202517861?q=80&w=2787&auto=format&fit=crop"
+                            class="w-full h-full object-cover" alt="Men">
+                    </div>
+                    <div class="mt-6 flex justify-between items-start">
+                        <div>
+                            <p class="font-sans text-[9px] tracking-[0.2em] text-vo-gold uppercase mb-2">Commission</p>
+                            <h3
+                                class="font-serif text-3xl text-vo-white italic group-hover:text-vo-gold transition-colors">
+                                Modern Legacy</h3>
+                        </div>
+                        <span class="font-sans text-[9px] text-white/30">03</span>
+                    </div>
+                </div>
+
+                <!-- Item 5: Landscape -->
+                <div class="group cursor-pointer reveal-section">
+                    <div class="editorial-image-container aspect-[16/9] w-full">
+                        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2940&auto=format&fit=crop"
+                            class="w-full h-full object-cover" alt="Commercial">
+                    </div>
+                    <div class="mt-6 flex justify-between items-start">
+                        <div>
+                            <p class="font-sans text-[9px] tracking-[0.2em] text-vo-gold uppercase mb-2">Commercial</p>
+                            <h3
+                                class="font-serif text-3xl text-vo-white italic group-hover:text-vo-gold transition-colors">
+                                Brand Campaigns</h3>
+                        </div>
+                        <span class="font-sans text-[9px] text-white/30">05</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2 (Staggered Down) -->
+            <div class="flex flex-col space-y-24 md:space-y-48 mt-0 md:mt-32">
+                <!-- Item 2: Vertical Small -->
+                <div class="group cursor-pointer reveal-section md:w-[85%]">
+                    <div class="editorial-image-container aspect-[3/4] w-full">
+                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=2550&auto=format&fit=crop"
+                            class="w-full h-full object-cover" alt="Portrait">
+                    </div>
+                    <div class="mt-6 flex justify-between items-start">
+                        <div>
+                            <p class="font-sans text-[9px] tracking-[0.2em] text-vo-gold uppercase mb-2">Portrait</p>
+                            <h3
+                                class="font-serif text-3xl text-vo-white italic group-hover:text-vo-gold transition-colors">
+                                Illimitable Woman</h3>
+                        </div>
+                        <span class="font-sans text-[9px] text-white/30">02</span>
+                    </div>
+                </div>
+
+                <!-- Item 4: Vertical Tall -->
+                <div class="group cursor-pointer reveal-section">
+                    <div class="editorial-image-container aspect-[2/3] w-full">
+                        <img src="https://images.unsplash.com/photo-1583336132338-2e0d37e250e3?q=80&w=2692&auto=format&fit=crop"
+                            class="w-full h-full object-cover" alt="Boudoir">
+                    </div>
+                    <div class="mt-6 flex justify-between items-start">
+                        <div>
+                            <p class="font-sans text-[9px] tracking-[0.2em] text-vo-gold uppercase mb-2">Artistic</p>
+                            <h3
+                                class="font-serif text-3xl text-vo-white italic group-hover:text-vo-gold transition-colors">
+                                Intimate Form</h3>
+                        </div>
+                        <span class="font-sans text-[9px] text-white/30">04</span>
+                    </div>
+                </div>
+
+                <!-- Item 6: Square -->
+                <div class="group cursor-pointer reveal-section md:w-[90%] md:ml-auto">
+                    <div class="editorial-image-container aspect-square w-full">
+                        <img src="https://images.unsplash.com/photo-1534008709405-f938a9a23992?q=80&w=2940&auto=format&fit=crop"
+                            class="w-full h-full object-cover" alt="Legacy">
+                    </div>
+                    <div class="mt-6 flex justify-between items-start">
+                        <div>
+                            <p class="font-sans text-[9px] tracking-[0.2em] text-vo-gold uppercase mb-2">Fine Art</p>
+                            <h3
+                                class="font-serif text-3xl text-vo-white italic group-hover:text-vo-gold transition-colors">
+                                Monochrome</h3>
+                        </div>
+                        <span class="font-sans text-[9px] text-white/30">06</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Editorial Services Section -->
+    <section id="services" class="py-32 bg-vo-black relative overflow-hidden">
+        <!-- Background Text Decor -->
+        <h2
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[20vw] leading-none text-white/[0.02] pointer-events-none whitespace-nowrap">
+            SERVICES</h2>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 divide-y divide-white/10 border-t border-b border-white/10">
+                <!-- Service Row 1 -->
+                <div
+                    class="group py-12 md:py-16 grid md:grid-cols-12 gap-8 items-center hover:bg-white/[0.02] transition-colors duration-500 cursor-default">
+                    <div class="md:col-span-2 font-sans text-[10px] text-vo-gold tracking-[0.2em]">01</div>
+                    <div class="md:col-span-4">
+                        <h3 class="font-serif text-4xl text-vo-white group-hover:italic transition-all duration-300">
+                            Commissioned Portraits</h3>
+                    </div>
+                    <div class="md:col-span-4">
+                        <p class="font-sans text-xs text-gray-500 leading-relaxed font-light">Personal branding and
+                            legacy portraits for individuals seeking magazine-quality imagery. Shot in studio or on
+                            location.</p>
+                    </div>
+                    <div
+                        class="md:col-span-2 text-right opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6 text-vo-gold ml-auto"></i>
+                    </div>
+                </div>
+
+                <!-- Service Row 2 -->
+                <div
+                    class="group py-12 md:py-16 grid md:grid-cols-12 gap-8 items-center hover:bg-white/[0.02] transition-colors duration-500 cursor-default">
+                    <div class="md:col-span-2 font-sans text-[10px] text-vo-gold tracking-[0.2em]">02</div>
+                    <div class="md:col-span-4">
+                        <h3 class="font-serif text-4xl text-vo-white group-hover:italic transition-all duration-300">
+                            Model Testing</h3>
+                    </div>
+                    <div class="md:col-span-4">
+                        <p class="font-sans text-xs text-gray-500 leading-relaxed font-light">Building comprehensive,
+                            high-end portfolios for aspiring and professional talent. Industry standard beauty and
+                            fashion framing.</p>
+                    </div>
+                    <div
+                        class="md:col-span-2 text-right opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6 text-vo-gold ml-auto"></i>
+                    </div>
+                </div>
+
+                <!-- Service Row 3 -->
+                <div
+                    class="group py-12 md:py-16 grid md:grid-cols-12 gap-8 items-center hover:bg-white/[0.02] transition-colors duration-500 cursor-default">
+                    <div class="md:col-span-2 font-sans text-[10px] text-vo-gold tracking-[0.2em]">03</div>
+                    <div class="md:col-span-4">
+                        <h3 class="font-serif text-4xl text-vo-white group-hover:italic transition-all duration-300">
+                            Commercial Fashion</h3>
+                    </div>
+                    <div class="md:col-span-4">
+                        <p class="font-sans text-xs text-gray-500 leading-relaxed font-light">Visual storytelling
+                            campaigns for designers, boutiques, and fashion brands. Full production support available.
+                        </p>
+                    </div>
+                    <div
+                        class="md:col-span-2 text-right opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6 text-vo-gold ml-auto"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="py-48 px-6 flex items-center justify-center bg-vo-dark relative overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1445964047600-cdbdb873673d?q=80&w=2856&auto=format&fit=crop"
+                class="w-full h-full object-cover opacity-20 grayscale">
+            <div class="absolute inset-0 bg-gradient-to-t from-vo-black via-vo-black/80 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl text-center reveal-section">
+            <div class="mb-12">
+                <span class="font-serif text-8xl text-vo-gold/20">"</span>
+            </div>
+            <h3 class="font-serif text-3xl md:text-5xl lg:text-6xl text-vo-white font-light leading-snug mb-12">
+                It’s like VO saw my <span class="text-vo-gold italic">inner realms</span> and pulled out a part of me
+                that I know well but never show the world. The photos are vulnerable, strong, elegant.
+            </h3>
+            <div class="flex flex-col items-center space-y-2">
+                <span class="font-serif text-xl italic text-white">Renee</span>
+                <span class="font-sans text-[9px] tracking-[0.2em] text-vo-gold uppercase">Legacy Client</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 bg-vo-black relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-24">
+                <p class="font-sans text-[10px] tracking-[0.4em] text-gray-500 uppercase mb-4">Inquiries</p>
+                <h2 class="font-serif text-6xl md:text-8xl text-vo-white">Begin Your <span
+                        class="italic text-vo-gold">Legacy</span></h2>
+            </div>
+
+            <form class="space-y-12" onsubmit="event.preventDefault(); showModal();">
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="group relative">
+                        <input type="text" required
+                            class="w-full bg-transparent border-b border-white/20 py-4 text-white focus:outline-none focus:border-vo-gold transition-colors font-serif text-2xl placeholder-transparent"
+                            id="name" placeholder="Name">
+                        <label for="name"
+                            class="absolute left-0 top-4 text-gray-500 font-sans text-xs tracking-[0.2em] uppercase transition-all duration-300 pointer-events-none group-focus-within:-translate-y-6 group-focus-within:text-[9px] group-focus-within:text-vo-gold peer-placeholder-shown:translate-y-0">Full
+                            Name</label>
+                    </div>
+                    <div class="group relative">
+                        <input type="email" required
+                            class="w-full bg-transparent border-b border-white/20 py-4 text-white focus:outline-none focus:border-vo-gold transition-colors font-serif text-2xl placeholder-transparent"
+                            id="email" placeholder="Email">
+                        <label for="email"
+                            class="absolute left-0 top-4 text-gray-500 font-sans text-xs tracking-[0.2em] uppercase transition-all duration-300 pointer-events-none group-focus-within:-translate-y-6 group-focus-within:text-[9px] group-focus-within:text-vo-gold">Email
+                            Address</label>
+                    </div>
+                </div>
+
+                <div class="group relative">
+                    <select
+                        class="w-full bg-transparent border-b border-white/20 py-4 text-white focus:outline-none focus:border-vo-gold transition-colors font-serif text-2xl appearance-none cursor-pointer">
+                        <option value="" disabled selected class="bg-vo-black text-gray-500">Select Interest</option>
+                        <option value="portrait" class="bg-vo-black">Commissioned Portrait</option>
+                        <option value="fashion" class="bg-vo-black">Fashion Editorial</option>
+                        <option value="commercial" class="bg-vo-black">Commercial Project</option>
+                        <option value="mentorship" class="bg-vo-black">Mentorship</option>
+                    </select>
+                    <div class="absolute right-0 top-6 pointer-events-none">
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="group relative pt-6">
+                    <textarea rows="1"
+                        class="w-full bg-transparent border-b border-white/20 py-4 text-white focus:outline-none focus:border-vo-gold transition-colors font-serif text-2xl placeholder-transparent resize-none"
+                        id="message" placeholder="Message"></textarea>
+                    <label for="message"
+                        class="absolute left-0 top-10 text-gray-500 font-sans text-xs tracking-[0.2em] uppercase transition-all duration-300 pointer-events-none group-focus-within:-translate-y-6 group-focus-within:text-[9px] group-focus-within:text-vo-gold">Tell
+                        us about your vision</label>
+                </div>
+
+                <div class="text-center pt-12">
+                    <button type="submit"
+                        class="group relative inline-flex items-center justify-center px-16 py-5 overflow-hidden font-sans text-[10px] tracking-[0.3em] font-medium text-vo-black bg-vo-white transition-all duration-500 hover:text-white">
+                        <span
+                            class="absolute w-0 h-0 transition-all duration-500 ease-out bg-vo-black rounded-full group-hover:w-80 group-hover:h-80"></span>
+                        <span class="relative">SUBMIT INQUIRY</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-20 border-t border-white/5">
+        <div class="max-w-[1800px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+            <div class="col-span-1 md:col-span-2">
+                <h4 class="font-serif text-4xl font-bold tracking-widest text-white mb-6">VO.</h4>
+                <p class="font-sans text-[10px] tracking-widest text-gray-500 uppercase leading-loose">
+                    Anchorage, Alaska based.<br>
+                    Available worldwide for commission.
+                </p>
+            </div>
+
+            <div class="flex flex-col space-y-4">
+                <span class="font-sans text-[9px] tracking-widest text-vo-gold uppercase mb-2">Social</span>
+                <a href="#" class="font-serif text-lg text-gray-400 hover:text-white transition-colors">Instagram</a>
+                <a href="#" class="font-serif text-lg text-gray-400 hover:text-white transition-colors">Facebook</a>
+                <a href="#" class="font-serif text-lg text-gray-400 hover:text-white transition-colors">LinkedIn</a>
+            </div>
+
+            <div class="flex flex-col space-y-4">
+                <span class="font-sans text-[9px] tracking-widest text-vo-gold uppercase mb-2">Legal</span>
+                <a href="#" class="font-serif text-lg text-gray-400 hover:text-white transition-colors">Privacy
+                    Policy</a>
+                <a href="#" class="font-serif text-lg text-gray-400 hover:text-white transition-colors">Terms of
+                    Service</a>
+                <span class="font-sans text-[9px] text-gray-600 mt-4">© 2024 VO Photography</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Modal -->
+    <div id="successModal"
+        class="fixed inset-0 z-[9999] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="hideModal()"></div>
+        <div
+            class="bg-vo-dark border border-white/10 p-12 max-w-md w-full relative transform scale-95 transition-all duration-500 shadow-2xl">
+            <button onclick="hideModal()"
+                class="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors"><i data-lucide="x"
+                    class="w-6 h-6"></i></button>
+            <div class="text-center space-y-6">
+                <div class="w-16 h-16 border border-vo-gold rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="font-serif text-3xl text-vo-gold italic">V</span>
+                </div>
+                <h3 class="font-serif text-4xl text-white">Inquiry Received</h3>
+                <p class="font-sans text-[10px] tracking-widest text-gray-400 leading-relaxed uppercase">Thank you. We
+                    will review your vision and contact you shortly to discuss your legacy portrait.</p>
+                <button onclick="hideModal()"
+                    class="mt-8 px-8 py-3 bg-transparent border border-white/20 text-white font-sans text-[10px] tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Loader
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    // Trigger Text Reveals
+                    document.querySelectorAll('.reveal-text').forEach(el => el.classList.add('active'));
+                }, 800);
+            }, 1200);
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-4', 'bg-black/90', 'backdrop-blur-sm');
+                navbar.classList.remove('py-8', 'bg-transparent', 'mix-blend-exclusion');
+            } else {
+                navbar.classList.add('py-8', 'bg-transparent', 'mix-blend-exclusion');
+                navbar.classList.remove('py-4', 'bg-black/90', 'backdrop-blur-sm');
+            }
+        });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('translate-x-full');
+                // Staggered reveal of menu items
+                setTimeout(() => {
+                    mobileLinks.forEach((link, index) => {
+                        link.style.opacity = '1';
+                        link.style.transform = 'translateY(0)';
+                    });
+                }, 300);
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                mobileLinks.forEach(link => {
+                    link.style.opacity = '0';
+                    link.style.transform = 'translateY(1rem)';
+                });
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.add('translate-x-full');
+            });
+        });
+
+        // Scroll Animation (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-20');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-section').forEach(el => {
+            el.classList.add('opacity-0', 'translate-y-20', 'transition-all', 'duration-1000', 'ease-out');
+            observer.observe(el);
+        });
+
+        // Input Animation Logic for Labels (Polyfill for peer-placeholder-shown issues in some contexts)
+        const inputs = document.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                if (input.value) {
+                    input.classList.add('has-content');
+                } else {
+                    input.classList.remove('has-content');
+                }
+            });
+        });
+
+        // Modal Logic
+        function showModal() {
+            const modal = document.getElementById('successModal');
+            modal.style.pointerEvents = 'auto';
+            modal.classList.remove('opacity-0');
+            modal.querySelector('div.transform').classList.remove('scale-95');
+            modal.querySelector('div.transform').classList.add('scale-100');
+        }
+
+        function hideModal() {
+            const modal = document.getElementById('successModal');
+            modal.style.pointerEvents = 'none';
+            modal.classList.add('opacity-0');
+            modal.querySelector('div.transform').classList.remove('scale-100');
+            modal.querySelector('div.transform').classList.add('scale-95');
+        }
+    </script>
+</body>
+
+</html>
