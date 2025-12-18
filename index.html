@@ -300,13 +300,13 @@
                 <!-- Main Image -->
                 <div class="editorial-image-container w-full aspect-[4/5] md:w-[90%] md:ml-auto">
                     <img src="https://images.unsplash.com/photo-1485230405346-71acb9518d9c?q=80&w=2994&auto=format&fit=crop"
-                        alt="Thuy Vo Profile" class="w-full h-full object-cover" loading="lazy">
+                        alt="Thuy Vo Profile" class="w-full h-full object-cover">
                 </div>
                 <!-- Overlapping Accent Image -->
                 <div
                     class="hidden md:block absolute -bottom-16 left-0 w-64 aspect-[3/4] editorial-image-container border-4 border-vo-black z-30">
                     <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=2000&auto=format&fit=crop"
-                        alt="Detail Shot" class="w-full h-full object-cover" loading="lazy">
+                        alt="Detail Shot" class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
@@ -713,8 +713,8 @@
 
         // Scroll Animation (Intersection Observer)
         const observerOptions = {
-            threshold: 0.15,
-            rootMargin: "0px"
+            threshold: 0.1,
+            rootMargin: "50px"
         };
 
         const observer = new IntersectionObserver((entries) => {
