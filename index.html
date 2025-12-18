@@ -29,14 +29,16 @@
                         colors: {
                             'vo-black': '#080808',
                             'vo-dark': '#0f0f0f',
-                            'vo-gold': '#C5A059', /* More muted, metallic gold */
+                            'vo-gold': '#C5A059', /* Muted, metallic gold */
                             'vo-white': '#EAEAEA',
+                            'vo-gray': '#888888'
+                        },
+                        letterSpacing: {
+                            'widest-xl': '0.25em',
+                            'widest-xxl': '0.4em',
                         },
                         backgroundImage: {
                             'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                        },
-                        spacing: {
-                            '128': '32rem',
                         }
                     }
                 }
@@ -66,7 +68,6 @@
             color: #EAEAEA;
             overflow-x: hidden;
             cursor: default;
-            /* Keep default cursor for elegance */
         }
 
         /* TEXT REVEAL ANIMATION */
@@ -145,19 +146,14 @@
             width: 100%;
         }
 
-        /* STAGGERED GRID LAYOUT HELPERS */
-        .stagger-col-1 {
-            margin-top: 0;
-        }
-
-        .stagger-col-2 {
-            margin-top: 4rem;
-        }
-
-        @media (min-width: 768px) {
-            .stagger-col-2 {
-                margin-top: 8rem;
-            }
+        /* FORM INPUT ANIMATION */
+        input:focus~label,
+        input.has-content~label,
+        textarea:focus~label,
+        textarea.has-content~label {
+            transform: translateY(-1.5rem);
+            font-size: 0.6rem;
+            color: #C5A059;
         }
     </style>
 </head>
@@ -223,44 +219,36 @@
     <header class="relative w-full h-screen flex items-center justify-center overflow-hidden">
         <!-- Background Image with Overlay -->
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1920&auto=format&fit=crop"
-                alt="Editorial Fashion Model"
+            <!-- Updated Image to 'Natural Moments' vibe - Wedding/Bridal focus as requested -->
+            <img src="https://images.unsplash.com/photo-1510076857177-7470076d4098?q=80&w=2940&auto=format&fit=crop"
+                alt="Natural Moment Photography"
                 class="w-full h-full object-cover opacity-50 grayscale contrast-125 scale-105 animate-subtle-zoom">
             <div class="absolute inset-0 bg-gradient-to-b from-vo-black/30 via-transparent to-vo-black"></div>
         </div>
 
         <div class="relative z-10 text-center px-4 w-full max-w-6xl mx-auto">
             <div class="flex flex-col items-center">
-                <!-- Top Detail -->
-                <div class="mb-8 overflow-hidden">
-                    <div class="flex items-center space-x-4 reveal-text" style="transition-delay: 200ms;">
-                        <span class="h-[1px] w-12 bg-vo-gold"></span>
-                        <p class="font-sans text-[9px] md:text-[11px] tracking-[0.4em] uppercase text-vo-white">
-                            Editorial & Fashion</p>
-                        <span class="h-[1px] w-12 bg-vo-gold"></span>
-                    </div>
-                </div>
+                <!-- Top Detail Removed -->
 
                 <!-- Main Title -->
                 <h1
-                    class="font-serif text-7xl md:text-9xl lg:text-[11rem] text-vo-white leading-[0.85] tracking-tight mix-blend-lighten mb-10">
-                    <div class="overflow-hidden"><span class="block reveal-text" style="transition-delay: 400ms;">The
-                            Inner</span></div>
+                    class="font-serif text-6xl md:text-8xl lg:text-[9rem] text-vo-white leading-[0.9] tracking-tight mix-blend-lighten mb-14">
+                    <div class="overflow-hidden"><span class="block reveal-text"
+                            style="transition-delay: 200ms;">Moments captured</span></div>
                     <div class="overflow-hidden"><span class="block italic text-vo-gold/90 reveal-text"
-                            style="transition-delay: 600ms;">Muse</span></div>
+                            style="transition-delay: 400ms;">with intention</span></div>
                 </h1>
 
                 <!-- Subtitle -->
-                <div class="overflow-hidden max-w-md mx-auto">
-                    <p class="font-sans text-[10px] tracking-[0.25em] text-gray-400 leading-7 text-center reveal-text"
-                        style="transition-delay: 800ms;">
-                        ANCHORAGE, ALASKA. <br>
-                        CAPTURING THE ILLIMITABLE SPIRIT THROUGH HIGH-FASHION SENSIBILITIES.
+                <div class="overflow-hidden max-w-2xl mx-auto">
+                    <p class="font-sans text-xs md:text-sm tracking-[0.25em] uppercase text-vo-white/80 leading-loose text-center reveal-text"
+                        style="transition-delay: 600ms;">
+                        My approach is simple: capture natural moments that tell your story and last forever.
                     </p>
                 </div>
 
                 <!-- CTA -->
-                <div class="mt-16 overflow-hidden reveal-text" style="transition-delay: 1000ms;">
+                <div class="mt-16 overflow-hidden reveal-text" style="transition-delay: 800ms;">
                     <a href="#portfolio"
                         class="group relative inline-flex items-center justify-center px-10 py-4 overflow-hidden font-sans text-[10px] tracking-[0.3em] font-medium text-white border border-white/20 transition-all duration-300 hover:border-vo-gold">
                         <span
@@ -311,13 +299,13 @@
             <div class="md:col-span-7 relative">
                 <!-- Main Image -->
                 <div class="editorial-image-container w-full aspect-[4/5] md:w-[90%] md:ml-auto">
-                    <img src="https://images.unsplash.com/photo-1485230405346-71acb9518d9c?q=80&w=1200&auto=format&fit=crop"
+                    <img src="https://images.unsplash.com/photo-1485230405346-71acb9518d9c?q=80&w=2994&auto=format&fit=crop"
                         alt="Thuy Vo Profile" class="w-full h-full object-cover" loading="lazy">
                 </div>
                 <!-- Overlapping Accent Image -->
                 <div
                     class="hidden md:block absolute -bottom-16 left-0 w-64 aspect-[3/4] editorial-image-container border-4 border-vo-black z-30">
-                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop"
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=2000&auto=format&fit=crop"
                         alt="Detail Shot" class="w-full h-full object-cover" loading="lazy">
                 </div>
             </div>
@@ -351,7 +339,7 @@
                 <!-- Item 1: Large Vertical -->
                 <div class="group cursor-pointer reveal-section">
                     <div class="editorial-image-container aspect-[3/4] w-full">
-                        <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?q=80&w=1000&auto=format&fit=crop"
+                        <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?q=80&w=2940&auto=format&fit=crop"
                             class="w-full h-full object-cover" alt="Fashion" loading="lazy">
                     </div>
                     <div class="mt-6 flex justify-between items-start">
@@ -368,7 +356,7 @@
                 <!-- Item 3: Square-ish -->
                 <div class="group cursor-pointer reveal-section md:w-[80%] md:ml-auto">
                     <div class="editorial-image-container aspect-[4/5] w-full">
-                        <img src="https://images.unsplash.com/photo-1610303073063-e38202517861?q=80&w=1000&auto=format&fit=crop"
+                        <img src="https://images.unsplash.com/photo-1610303073063-e38202517861?q=80&w=2787&auto=format&fit=crop"
                             class="w-full h-full object-cover" alt="Men" loading="lazy">
                     </div>
                     <div class="mt-6 flex justify-between items-start">
@@ -385,7 +373,7 @@
                 <!-- Item 5: Landscape -->
                 <div class="group cursor-pointer reveal-section">
                     <div class="editorial-image-container aspect-[16/9] w-full">
-                        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200&auto=format&fit=crop"
+                        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2940&auto=format&fit=crop"
                             class="w-full h-full object-cover" alt="Commercial" loading="lazy">
                     </div>
                     <div class="mt-6 flex justify-between items-start">
@@ -405,7 +393,7 @@
                 <!-- Item 2: Vertical Small -->
                 <div class="group cursor-pointer reveal-section md:w-[85%]">
                     <div class="editorial-image-container aspect-[3/4] w-full">
-                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1000&auto=format&fit=crop"
+                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=2550&auto=format&fit=crop"
                             class="w-full h-full object-cover" alt="Portrait" loading="lazy">
                     </div>
                     <div class="mt-6 flex justify-between items-start">
@@ -422,7 +410,7 @@
                 <!-- Item 4: Vertical Tall -->
                 <div class="group cursor-pointer reveal-section">
                     <div class="editorial-image-container aspect-[2/3] w-full">
-                        <img src="https://images.unsplash.com/photo-1583336132338-2e0d37e250e3?q=80&w=1000&auto=format&fit=crop"
+                        <img src="https://images.unsplash.com/photo-1583336132338-2e0d37e250e3?q=80&w=2692&auto=format&fit=crop"
                             class="w-full h-full object-cover" alt="Boudoir" loading="lazy">
                     </div>
                     <div class="mt-6 flex justify-between items-start">
@@ -439,7 +427,7 @@
                 <!-- Item 6: Square -->
                 <div class="group cursor-pointer reveal-section md:w-[90%] md:ml-auto">
                     <div class="editorial-image-container aspect-square w-full">
-                        <img src="https://images.unsplash.com/photo-1534008709405-f938a9a23992?q=80&w=1000&auto=format&fit=crop"
+                        <img src="https://images.unsplash.com/photo-1534008709405-f938a9a23992?q=80&w=2940&auto=format&fit=crop"
                             class="w-full h-full object-cover" alt="Legacy" loading="lazy">
                     </div>
                     <div class="mt-6 flex justify-between items-start">
@@ -471,13 +459,12 @@
                     class="group py-12 md:py-16 grid md:grid-cols-12 gap-8 items-center hover:bg-white/[0.02] transition-colors duration-500 cursor-default">
                     <div class="md:col-span-2 font-sans text-[10px] text-vo-gold tracking-[0.2em]">01</div>
                     <div class="md:col-span-4">
-                        <h3 class="font-serif text-4xl text-vo-white group-hover:italic transition-all duration-300">
-                            Commissioned Portraits</h3>
+                        <h3 class="font-serif text-4xl text-vo-white group-hover:italic transition-all duration-300">The
+                            Wedding Story</h3>
                     </div>
                     <div class="md:col-span-4">
-                        <p class="font-sans text-xs text-gray-500 leading-relaxed font-light">Personal branding and
-                            legacy portraits for individuals seeking magazine-quality imagery. Shot in studio or on
-                            location.</p>
+                        <p class="font-sans text-xs text-gray-500 leading-relaxed font-light">Emotional, natural
+                            coverage focused on real moments, quiet details, and timeless storytelling.</p>
                     </div>
                     <div
                         class="md:col-span-2 text-right opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -491,12 +478,11 @@
                     <div class="md:col-span-2 font-sans text-[10px] text-vo-gold tracking-[0.2em]">02</div>
                     <div class="md:col-span-4">
                         <h3 class="font-serif text-4xl text-vo-white group-hover:italic transition-all duration-300">
-                            Model Testing</h3>
+                            Moments & Gatherings</h3>
                     </div>
                     <div class="md:col-span-4">
-                        <p class="font-sans text-xs text-gray-500 leading-relaxed font-light">Building comprehensive,
-                            high-end portfolios for aspiring and professional talent. Industry standard beauty and
-                            fashion framing.</p>
+                        <p class="font-sans text-xs text-gray-500 leading-relaxed font-light">Candid event photography
+                            capturing people, atmosphere, and meaningful interactions as they happen.</p>
                     </div>
                     <div
                         class="md:col-span-2 text-right opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -510,12 +496,11 @@
                     <div class="md:col-span-2 font-sans text-[10px] text-vo-gold tracking-[0.2em]">03</div>
                     <div class="md:col-span-4">
                         <h3 class="font-serif text-4xl text-vo-white group-hover:italic transition-all duration-300">
-                            Commercial Fashion</h3>
+                            Personal Portraits</h3>
                     </div>
                     <div class="md:col-span-4">
-                        <p class="font-sans text-xs text-gray-500 leading-relaxed font-light">Visual storytelling
-                            campaigns for designers, boutiques, and fashion brands. Full production support available.
-                        </p>
+                        <p class="font-sans text-xs text-gray-500 leading-relaxed font-light">Intentional portrait
+                            sessions focused on presence, emotion, and authentic expression.</p>
                     </div>
                     <div
                         class="md:col-span-2 text-right opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -529,7 +514,7 @@
     <!-- Testimonial -->
     <section class="py-48 px-6 flex items-center justify-center bg-vo-dark relative overflow-hidden">
         <div class="absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1445964047600-cdbdb873673d?q=80&w=1920&auto=format&fit=crop"
+            <img src="https://images.unsplash.com/photo-1445964047600-cdbdb873673d?q=80&w=2856&auto=format&fit=crop"
                 class="w-full h-full object-cover opacity-20 grayscale" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-vo-black via-vo-black/80 to-transparent"></div>
         </div>
@@ -619,8 +604,7 @@
             <div class="col-span-1 md:col-span-2">
                 <h4 class="font-serif text-4xl font-bold tracking-widest text-white mb-6">VO.</h4>
                 <p class="font-sans text-[10px] tracking-widest text-gray-500 uppercase leading-loose">
-                    Anchorage, Alaska based.<br>
-                    Available worldwide for commission.
+                    My approach is simple: capture natural moments that tell your story and last forever.
                 </p>
             </div>
 
@@ -679,7 +663,7 @@
                     // Trigger Text Reveals
                     document.querySelectorAll('.reveal-text').forEach(el => el.classList.add('active'));
                 }, 800);
-            }, 500);
+            }, 1200);
         });
 
         // Navbar Scroll Effect
